@@ -52,4 +52,8 @@ public class UserService {
 	public int getDateDifference(Date d1, Date d2) {
 		return userDao.getDateDifference(d1, d2);
 	}
+
+	public User getUserByDNI(int dni) {
+			return userDao.getUsersFiltered("identification = '" + dni + "'").get(0);
+	}
 }

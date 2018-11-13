@@ -7,22 +7,26 @@
 
 <h:head>
     <title>Sistema Control de Ingreso</title>
+    <link rel="stylesheet" href="./styles/sakura.css" type="text/css"/>
     <style type="text/css">
         body {
             /*	background-color:rgb(197,224,179);*/
             background-color: rgb(230, 242, 222);
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            flex-direction: column;
+            background-image: linear-gradient(to right, #c1dfc4 0%, #deecdd 100%);
         }
 
         .centered {
-            position: absolute;
-            height: 120px;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            width: 425px;
-            left: 50%;
-            margin-left: -212px;
-            background-color: rgb(168, 208, 141)
+
+            height: auto;
+            margin: 10rem;
+            width: auto;
+
+            background-color: rgb(168, 208, 141);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
         }
     </style>
 </h:head>
@@ -33,10 +37,15 @@
     <p:panel styleClass="centered">
         <h:form prependId="false">
             <h:panelGrid columns="3">
-                <h:outputLabel value="Usuario:" style="font-weight:bold"/>
-                <p:inputText value="#{userMB.getloguser().username}" required="true"
-                             requiredMessage="El campo usuario es obligatorio" id="txtUsername"/>
+
+                <!--<p:inputText value="#{userMB.getloguser().username}" required="true"-->
+                             <!--requiredMessage="El campo usuario es obligatorio" id="txtUsername"/>-->
+                <h:outputLabel value="Cédula:" style="font-weight:bold"/>
+                <p:inputNumber value="#{userMB.getloguser().identification}" required="true"
+                             requiredMessage="El campo cédula es obligatorio" id="txtUsername"
+                decimalPlaces="0" minValue="0"/>
                 <p:message for="txtUsername" style="color:red" display="default"/>
+
                 <h:outputLabel value="Contraseña:" style="font-weight:bold"/>
                 <p:password value="#{userMB.getloguser().password}" required="true"
                             requiredMessage="El campo contraseña es obligatorio"

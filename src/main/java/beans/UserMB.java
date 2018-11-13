@@ -22,6 +22,7 @@ import org.primefaces.PrimeFaces;
 import entity.Audit;
 import entity.User;
 import service.AuditService;
+import service.QRService;
 import service.UserService;
 import util.Cifrado;
 import util.DeactivateVisitors;
@@ -63,6 +64,7 @@ public class UserMB {
             user.setDatelastpassword(d);
             user.setPassword(Cifrado.getStringMessageDigest(user.getPassword(), Cifrado.MD5));
         }
+        this.QRdata = QRService.refresh(u);
 
         userService.update(user);
 
@@ -220,7 +222,8 @@ public class UserMB {
 
     public String loginUser() {
         userService = new UserService();
-        User u = userService.getUserByUsername("" + loguser.getUsername());
+        User u = userService.getUserByDNI(Integer.parseInt(loguser.getIdentification()));
+//        User u = userService.getUserByUsername("" + loguser.getUsername());
         boolean wrongPassword = true, wrongUsername = true;
 
         FacesMessage message = null;
@@ -274,6 +277,7 @@ public class UserMB {
                         audit.setTableid(loguser.getId());
                         audit.setOperationcrud("I");
                         auditService.insert(audit);
+                        setTable("usersTable.xhtml");
                         wrongPassword = false;
                         loggedIn = true;
                         return "principalAdmin.xhtml";
@@ -303,8 +307,8 @@ public class UserMB {
                             boolean useNumbers = false;
                             String password = RandomStringUtils.random(length, useLetters, useNumbers);
                             String mail = "Hola! " + user.getFullname()
-                                    + "\n Su contraseña ha caducado"
-                                    + ",\nsu nueva contraseña en el Sistema de Control de Ingreso de la Universidad El Bosque" + " es: "
+                                    + "\n Su contraseña ha caducado."
+                                    + ",\nSu nueva contraseña en el Sistema de Control de Ingreso de la Universidad El Bosque" + " es: "
                                     + password + "\nDeberá cambiarla al momento de ingresar al sistema";
                             String subject = "Cambio Contraseña";
 
@@ -328,12 +332,7 @@ public class UserMB {
                             audit.setOperationcrud("U");
                             auditService.insert(audit);
                         }
-                        this.QRdata = "Nombre:" + this.user.getFullname()  + "\n" +
-                                "Email:" + this.user.getEmailaddress()  + "\n" +
-                                "Facultad:" + this.user.getSchool()  + "\n" +
-                                "Carrera:" + this.user.getMajor()  + "\n" +
-                                "Teléfono:" + this.user.getPhonenumber()  + "\n" +
-                                "Cédula:" + this.user.getIdentification();
+                        this.QRdata = QRService.refresh(u);
                         wrongPassword = false;
                         loggedIn = true;
                         this.setTable("/user/QR.xhtml");
@@ -619,7 +618,7 @@ public class UserMB {
 
     public String forgotPassword() {
         userService = new UserService();
-        this.user = userService.getUserByUsername("" + loguser.getUsername());
+        this.user = userService.getUserByDNI(Integer.parseInt(loguser.getIdentification()));
         this.user.setPassword("");
         return "newPassword.xhtml";
     }

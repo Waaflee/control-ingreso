@@ -5,6 +5,7 @@
 
 <h:head>
     <title>Sistema Control de Ingreso</title>
+    <link rel="stylesheet" href="../styles/sakura.css" type="text/css"/>
     <style type="text/css">
         body {
             /*	background-color:rgb(197,224,179);*/
@@ -12,14 +13,14 @@
         }
 
         .centered {
-            position: absolute;
+            /*position: absolute;
             height: 340px;
             top: 0;
             bottom: 0;
             margin: auto;
             width: AUTO;
             left: 50%;
-            margin-left: -330px;
+            margin-left: -330px;*/
             background-color: rgb(168, 208, 141);
         }
     </style>
@@ -29,7 +30,7 @@
     <center>
         <p:graphicImage value="/img/elbosque.png" style="height:100px"/>
     </center>
-    <p:panel styleClass="centered">
+    <p:panel styleClass="centered" style="width: auto;">
         <h:form prependId="false">
             <h:panelGrid columns="3" id="grid">
 
@@ -93,12 +94,14 @@
                 />
                 <p:message for="dni" style="color:red" display="default"/>
 
-                <f:facet name="footer">
-                    <center>
+
+                <f:facet name="footer" style="text-align: center">
+                    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
                         <p:commandButton value="Modificar" action="#{userMB.updateUser()}"
-                                         style="background-color: rgb(151,199,119)" update="grid"/>
-                    </center>
+                                         style="background-color: rgb(151,199,119);" update="grid"/>
+                    </div>
                 </f:facet>
+
             </h:panelGrid>
         </h:form>
     </p:panel>

@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDAO{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		
-		Query q = session.createQuery("from User where userName = :username");
+		Query q = session.createQuery("from User where username = :username");
 		q.setParameter("username", username);
 		List lista = q.list();
 		t.commit();
@@ -80,7 +80,7 @@ public class UserDaoImpl implements UserDAO{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		
-		Query q = session.createQuery("from User where emailAddress = :email");
+		Query q = session.createQuery("from User where emailaddress = :email");
 		q.setParameter("email", emailAddress);
 		List lista = q.list();
 		t.commit();
