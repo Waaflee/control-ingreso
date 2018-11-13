@@ -1,0 +1,206 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:form>
+
+	<p:button value="Nuevo" href="#{userMB.prepareAddUser()}"
+		style="background-color: rgb(151,199,119)" />
+	<br />
+	<br />
+	<p:dataTable id="dTable" var="user" value="#{userMB.listUsers}"
+		border="1" cellspacing="0px" paginator="true" rows="6"
+		style="font-size:12px" styleClass="table">
+		<p:column style="width:15px">
+			<f:facet name="header">
+				<p:outputLabel value="ID"/>
+			</f:facet>
+			<h:outputText value="#{user.id}"
+				rendered="#{'personal' eq user.usertype}"/>
+			<h:outputText value="#{user.id}"
+				rendered="#{'visitante' eq user.usertype}"/>
+		</p:column>
+
+		<p:column style="width:50px">
+			<f:facet name="header">
+				<p:outputLabel value="Usuario"/>
+			</f:facet>
+			<h:outputText value="#{user.username}"
+				rendered="#{'personal' eq user.usertype}" id="username"/>
+			<h:outputText value="#{user.username}"
+				rendered="#{'visitante' eq user.usertype}" id="username1"/>
+			<p:tooltip for="username" value="#{user.username}"/>
+			<p:tooltip for="username1" value="#{user.username}"/>
+		</p:column>
+
+		<p:column style="width:60px">
+			<f:facet name="header">
+				<p:outputLabel value="Nombre"/>
+			</f:facet>
+			<h:outputText value="#{user.fullname}"
+				rendered="#{'personal' eq user.usertype}" id="name"/>
+			<h:outputText value="#{user.fullname}"
+				rendered="#{'visitante' eq user.usertype}" id="name1"/>
+			<p:tooltip for="name" value="#{user.fullname}"/>
+			<p:tooltip for="name1" value="#{user.fullname}"/>
+		</p:column>
+		
+		<p:column style="width:90px">
+			<f:facet name="header">
+				<p:outputLabel value="Identificación"/>
+			</f:facet>
+			<h:outputText value="#{user.identification}"
+				rendered="#{'personal' eq user.usertype}" id="iden"/>
+			<h:outputText value="#{user.identification}"
+				rendered="#{'visitante' eq user.usertype}" id="iden1"/>
+			<p:tooltip for="iden" value="#{user.identification}"/>
+			<p:tooltip for="iden1" value="#{user.identification}"/>
+		</p:column>
+
+		<p:column style="width:50px">
+			<f:facet name="header">
+				<p:outputLabel value="Correo"/>
+			</f:facet>
+			<p:graphicImage value="/img/zoom.png" style="width:20px;height:20px"
+				rendered="#{'personal' eq user.usertype}" id="email"/>
+			<p:graphicImage value="/img/zoom.png" style="width:20px;height:20px"
+				rendered="#{'visitante' eq user.usertype}" id="email1"/>
+			<p:tooltip for="email" value="#{user.emailaddress}"/>
+			<p:tooltip for="email1" value="#{user.emailaddress}"/>
+		</p:column>
+
+		<p:column style="width:60px">
+			<f:facet name="header">
+				<p:outputLabel value="Facultad"/>
+			</f:facet>
+			<h:outputText value="#{user.school}"
+				rendered="#{'personal' eq user.usertype}" id="school"/>
+			<h:outputText value="#{user.school}"
+				rendered="#{'visitante' eq user.usertype}" id="school1"/>
+			<p:tooltip for="school" value="#{user.school}"/>
+			<p:tooltip for="school1" value="#{user.school}"/>
+		</p:column>
+
+		<p:column style="width:50px">
+			<f:facet name="header">
+				<p:outputLabel value="Carrera"/>
+			</f:facet>
+			<h:outputText value="#{user.major}"
+				rendered="#{'personal' eq user.usertype}" id="major"/>
+			<h:outputText value="#{user.major}"
+				rendered="#{'visitante' eq user.usertype}" id="major1"/>
+			<p:tooltip for="major" value="#{user.major}"/>
+			<p:tooltip for="major1" value="#{user.major}"/>
+		</p:column>
+
+		<p:column style="width:50px">
+			<f:facet name="header">
+				<p:outputLabel value="Semestre"/>
+			</f:facet>
+			<h:outputText value="#{user.semester}"
+				rendered="#{'personal' eq user.usertype}"/>
+			<h:outputText value="#{user.semester}"
+				rendered="#{'visitante' eq user.usertype}"/>
+		</p:column>
+
+		<p:column style="width:70px">
+			<f:facet name="header">
+				<p:outputLabel value="Último cambio de contraseña"/>
+			</f:facet>
+			<h:outputText value="#{user.datelastpassword}"
+				rendered="#{'personal' eq user.usertype}" id="change"/>
+			<h:outputText value="#{user.datelastpassword}"
+				rendered="#{'visitante' eq user.usertype}" id="change1"/>
+			<p:tooltip for="change" value="#{user.datelastpassword}"/>
+			<p:tooltip for="change1" value="#{user.datelastpassword}"/>
+		</p:column>
+
+		<p:column style="width:40px">
+			<f:facet name="header">
+				<p:outputLabel value="Estado"/>
+			</f:facet>
+			<h:outputText value="Activo"
+				rendered="#{('A' == user.active) and ('personal' == user.usertype)}"/>
+			<h:outputText value="Inactivo"
+				rendered="#{'I' eq user.active and 'personal' eq user.usertype}"/>
+			<h:outputText value="Activo"
+				rendered="#{'A' eq user.active and 'visitante' eq user.usertype}"/>
+			<h:outputText value="Inactivo"
+				rendered="#{'I' eq user.active and 'visitante' eq user.usertype}"/>
+		</p:column>
+
+		<p:column style="width:55px">
+			<f:facet name="header">
+				<p:outputLabel value="Tipo de Usuario:"/>
+			</f:facet>
+			<h:outputText value="Personal Universitario"
+				rendered="#{'personal' eq user.usertype}" id="userT"/>
+			<h:outputText value="Visitante"
+				rendered="#{'visitante' eq user.usertype}" id="userT1"/>
+			<p:tooltip for="userT" value="Personal Universitario"/>
+			<p:tooltip for="userT1" value="Personal Universitario"/>
+		</p:column>
+
+		<p:column style="width:60px">
+			<f:facet name="header">
+				<p:outputLabel value="Intentos"/>
+			</f:facet>
+			<h:outputText value="#{user.failedattempts}"
+				rendered="#{'personal' eq user.usertype}"/>
+			<h:outputText value="#{user.failedattempts}"
+				rendered="#{'visitante' eq user.usertype}"/>
+		</p:column>
+
+		<p:column style="width:35px">
+			<f:facet name="header">
+				<p:outputLabel value="Acción"/>
+				<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+			</f:facet>
+
+			<center>
+				<p:commandLink style="height:20px;width:20px"
+					action="#{userMB.removeUser()}" update="dTable growl"
+					rendered="#{'personal' eq user.usertype}">
+					<p:graphicImage value="/img/action_remove.png"/>
+				</p:commandLink>
+				<p:commandLink style="height:20px;width:20px"
+					action="#{userMB.removeUser()}" update="dTable growl"
+					rendered="#{'visitante' eq user.usertype}">
+					<p:graphicImage value="/img/action_remove.png"/>
+				</p:commandLink>
+			</center>
+		</p:column>
+
+		<p:column style="width:35px">
+			<f:facet name="header">
+				<p:outputLabel value="Acción"/>
+			</f:facet>
+
+			<center>
+				<p:commandLink action="#{userMB.prepareUpdateUser()}"
+					rendered="#{'personal' eq user.usertype}">
+					<p:graphicImage value="/img/page_edit.png"/>
+				</p:commandLink>
+				<p:commandLink action="#{userMB.prepareUpdateUser()}"
+					rendered="#{'visitante' eq user.usertype}">
+					<p:graphicImage value="/img/page_edit.png"/>
+				</p:commandLink>
+			</center>
+		</p:column>
+
+		<p:column style="width:60px">
+			<f:facet name="header">
+				<p:outputLabel value="Acción"/>
+			</f:facet>
+			<p:commandLink value="Generar Contraseña"
+				actionListener="#{userMB.generateRandomPassword()}"
+				rendered="#{'personal' eq user.usertype}"/>
+			<p:commandLink value="Generar Contraseña"
+				actionListener="#{userMB.generateRandomPassword()}"
+				rendered="#{'visitante' eq user.usertype}"/>
+		</p:column>
+
+	</p:dataTable>
+</h:form>
+</html>

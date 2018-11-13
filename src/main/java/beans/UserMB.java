@@ -306,7 +306,7 @@ public class UserMB {
 
                             sendMail(user.getEmailaddress(), mail, subject);
 
-                            java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
+//                            java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
                             user.setDatelastpassword(d);
 
                             user.setPassword("" + new ParameterDaoImpl().getParameter(1).getTextvalue() + Cifrado.getStringMessageDigest(password, Cifrado.MD5));
