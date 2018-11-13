@@ -32,7 +32,7 @@ import util.Mail;
 public class UserMB {
     public String QRdata = "";
     private User user;
-    private User tempUser;
+    public User tempUser;
     private Audit audit = new Audit();
     private User loguser;
     private DataModel<Audit> listAudit;

@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-        flex-direction: column;
+            flex-direction: column;
         }
     </style>
 
@@ -25,7 +25,7 @@
 <h:body>
     <div class="container">
         <h:outputText value="QR" />
-        <p:barcode value="#{userMB.QRdata}" type="qr"  width="400" height="400"/>
+        <p:barcode value="#{userMB.QRdata}" type="qr" width="400" height="400"/>
         <p:button value="Imprimir" onclick="window.print()"/>
     </div>
 </h:body>
