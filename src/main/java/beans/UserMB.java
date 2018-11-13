@@ -15,6 +15,7 @@ import dao.ParameterDaoImpl;
 import main.java.util.Ip;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalTime;
 import org.primefaces.PrimeFaces;
@@ -29,7 +30,7 @@ import util.Mail;
 @ManagedBean
 @SessionScoped
 public class UserMB {
-
+    public String QRdata = "";
     private User user;
     private User tempUser;
     private Audit audit = new Audit();
@@ -283,6 +284,7 @@ public class UserMB {
                         u.setFailedattempts(0);
                         userService.update(u);
                         loguser = u;
+                        this.user = u;
                         auditService = new AuditService();
                         java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
                         audit.setCreatedate(d);
@@ -293,7 +295,9 @@ public class UserMB {
                         audit.setTableid(loguser.getId());
                         audit.setOperationcrud("I");
                         auditService.insert(audit);
-                        if (Days.daysBetween(new LocalTime(u.getDatelastpassword().toInstant()), new LocalTime(d.toInstant())).getDays() > new ParameterDaoImpl().getParameter(2).getNumbervalue() ) {
+                        if (Days.daysBetween(new DateTime(u.getDatelastpassword().getTime()), new DateTime(d.getTime())).getDays() >
+                                new ParameterDaoImpl().getParameter(2).getNumbervalue() )
+                        {
                             int length = 10;
                             boolean useLetters = true;
                             boolean useNumbers = false;
@@ -324,8 +328,15 @@ public class UserMB {
                             audit.setOperationcrud("U");
                             auditService.insert(audit);
                         }
+                        this.QRdata = "Nombre:" + this.user.getFullname()  + "\n" +
+                                "Email:" + this.user.getEmailaddress()  + "\n" +
+                                "Facultad:" + this.user.getSchool()  + "\n" +
+                                "Carrera:" + this.user.getMajor()  + "\n" +
+                                "Teléfono:" + this.user.getPhonenumber()  + "\n" +
+                                "Cédula:" + this.user.getIdentification();
                         wrongPassword = false;
                         loggedIn = true;
+                        this.setTable("/user/QR.xhtml");
                         return "/user/principalUser.xhtml";
                     } else {
                         u.setFailedattempts(u.getFailedattempts() + 1);
@@ -635,4 +646,15 @@ public class UserMB {
 //        return "login.xhtml";
 
     }
+
+    public String getQRdata() {
+        return
+                "Nombre:" + this.user.getFullname()  + "\n" +
+                "Email:" + this.user.getEmailaddress()  + "\n" +
+                "Facultad:" + this.user.getSchool()  + "\n" +
+                "Carrera:" + this.user.getMajor()  + "\n" +
+                "Teléfono:" + this.user.getPhonenumber()  + "\n" +
+                "Cédula:" + this.user.getIdentification();
+    }
+
 }

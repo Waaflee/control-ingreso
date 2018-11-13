@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -6,7 +7,7 @@
 
 <h:head>
     <title>Sistema Control de Ingreso</title>
-    <style>
+    <style type="text/css">
         body {
             /*	background-color:rgb(197,224,179);*/
             background-color: rgb(230, 242, 222);
@@ -40,7 +41,7 @@
                              id="txtName"
                              validatorMessage="Sólo se permiten letras y debe tener un máximo de 60 caracteres">
                     <f:validateLength maximum="60"/>
-                    <f:validateRegex pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" />
+                    <f:validateRegex pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$"/>
                 </p:inputText>
                 <p:message for="txtName" style="color:red" display="default"/>
 
@@ -49,7 +50,7 @@
                              requiredMessage="El campo correo electrónico es obligatorio"
                              validatorMessage="Ingrese un correo válido" id="txtMail">
                     <f:validateRegex
-                            pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$" />
+                            pattern="^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"/>
                 </p:inputText>
                 <p:message for="txtMail" style="color:red" display="default"/>
 
@@ -58,7 +59,7 @@
                                  requiredMessage="El campo facultad es obligatorio" id="mSchool">
                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}"/>
                     <f:selectItems value="#{userMB.schools}"/>
-                    <p:ajax event="itemSelect" update=":mMajor" />
+                    <p:ajax event="itemSelect" update=":mMajor"/>
                 </p:selectOneMenu>
                 <p:message for="mSchool" style="color:red" display="default"/>
 
