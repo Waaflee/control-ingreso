@@ -33,10 +33,11 @@ public class HibernateUtil {
             try {
                 ourSessionFactory = new Configuration().
                         configure("hibernate.cfg.xml").
-                        setProperty("hibernate.connection.url", System.getenv("DATABASE_URL")).
+                        setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL")).
+//                        setProperty("hibernate.connection.url", System.getenv("DATABASE_URL")).
                         /*addAnnotatedClass(User.class).
                         addAnnotatedClass(Audit.class).
-                                addAnnotatedClass(Entryoutput.class).
+                                addAnnotatedClass(Entryoutput.class).System.getenv("JDBC_DATABASE_URL")
                                 addAnnotatedClass(Parameter.class).
                                 addAnnotatedClass(Qrcode.class).*/
                                 buildSessionFactory();
