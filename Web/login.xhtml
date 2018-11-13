@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Sistema Control de Ingreso</title>
+    <style type="text/css">
+        body {
+            /*	background-color:rgb(197,224,179);*/
+            background-color: rgb(230, 242, 222);
+        }
+
+        .centered {
+            position: absolute;
+            height: 120px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 425px;
+            left: 50%;
+            margin-left: -212px;
+            background-color: rgb(168, 208, 141)
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+    <center><p:graphicImage value="/img/elbosque.png"/></center>
+    <p:panel styleClass="centered">
+        <h:form prependId="false">
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Usuario:" style="font-weight:bold"/>
+                <p:inputText value="#{userMB.getloguser().username}" required="true"
+                             requiredMessage="El campo usuario es obligatorio" id="txtUsername"/>
+                <p:message for="txtUsername" style="color:red" display="default"/>
+                <h:outputLabel value="Contraseña:" style="font-weight:bold"/>
+                <p:password value="#{userMB.getloguser().password}" required="true"
+                            requiredMessage="El campo contraseña es obligatorio"
+                            id="txtPassword"/>
+                <p:message for="txtPassword" style="color:red" display="default"/>
+                <p:commandButton value="Ingresar"
+                                 action="#{userMB.loginUser()}" update="growl"
+                                 style="background-color: rgb(151,199,119)"/>
+                <p:commandLink value="¿Olvido su contraseña?"
+                               action="#{userMB.prepareForgotPassword()}"/>
+            </h:panelGrid>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>
