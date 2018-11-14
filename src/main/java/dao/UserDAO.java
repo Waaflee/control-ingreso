@@ -1,9 +1,7 @@
 package dao;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-
 import entity.User;
 
 public interface UserDAO {

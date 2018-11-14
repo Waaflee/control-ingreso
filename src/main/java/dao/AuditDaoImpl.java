@@ -21,6 +21,8 @@ public class AuditDaoImpl implements AuditDAO {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
+
+        @SuppressWarnings("unchecked")
         List<Audit> list = session.createQuery("from Audit").list();
         t.commit();
         return list;
@@ -36,6 +38,7 @@ public class AuditDaoImpl implements AuditDAO {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
+        @SuppressWarnings("unchecked")
         List<Audit> list = session.createQuery("from Audit where " + filter).list();
         t.commit();
         return list;

@@ -1,13 +1,9 @@
 package service;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-
 import dao.UserDaoImpl;
-import entity.Audit;
 import entity.User;
-import main.java.util.Ip;
 
 public class UserService {
 
@@ -19,14 +15,6 @@ public class UserService {
 
 	public void update(User updatedUser) {
 		userDao.update(updatedUser);
-/*		service.AuditService a = new service.AuditService();
-		entity.Audit audit = new Audit();
-		audit.setTableid(1);
-		audit.setTablename("User");
-		audit.setOperationcrud("U");
-		audit.setCreatedate(new java.sql.Timestamp(System.currentTimeMillis()));
-		audit.setUserid(updatedUser.getId());
-		audit.setAddressip(Ip.getIp());*/
 	}
 
 	public List<User> getUsers() {

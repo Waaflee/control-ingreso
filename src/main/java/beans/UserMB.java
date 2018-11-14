@@ -12,12 +12,10 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import dao.ParameterDaoImpl;
-import main.java.util.Ip;
+import util.Ip;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.logging.log4j.LogManager;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.LocalTime;
 import org.primefaces.PrimeFaces;
 import entity.Audit;
 import entity.User;

@@ -19,12 +19,10 @@ public class AuditService{
 	}
 
 	public Audit getAudit(int id) {
-		// TODO Auto-generated method stub
 		return auditDao.getAudit(id);
 	}
 
 	public List<Audit> getAuditsFiltered(String filter) {
-		// TODO Auto-generated method stub
 		return auditDao.getAuditsFiltered(filter);
 	}
 	
