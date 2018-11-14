@@ -221,7 +221,6 @@ public class UserMB {
     public String loginUser() {
         userService = new UserService();
         User u = userService.getUserByDNI(Integer.parseInt(loguser.getIdentification()));
-//        User u = userService.getUserByUsername("" + loguser.getUsername());
         boolean wrongPassword = true, wrongUsername = true;
 
         FacesMessage message = null;
@@ -229,27 +228,9 @@ public class UserMB {
 
         if (u != null) {
             wrongUsername = false;
-            /*LogManager.getLogger().debug("LOOOGGGIIIIINGGGGGGGGGGGGGGGGGG:::::::::::::::::::::::::::::");
-            LogManager.getLogger().debug(new ParameterDaoImpl().
-                    getParameter(1).
-                    getTextvalue() + "" + Cifrado.
-                    getStringMessageDigest(
-                            loguser.getPassword(),
-                            Cifrado.MD5));
-            LogManager.getLogger().debug("EQUALSSSSSSSSSSSSSSSSSSSSSSSSSSSSSsssss??");
-            LogManager.getLogger().debug( u.getPassword().equals(
-                    "" +
-                            new ParameterDaoImpl().
-                                    getParameter(1).
-                                    getTextvalue()
-                            + Cifrado.
-                            getStringMessageDigest(
-                                    loguser.getPassword(),
-                                    Cifrado.MD5)));*/
 
             if (
                     u.getActive().equals("A") &&
-//                            u.getPassword().length() == 10 &&
                             u.getPassword().equals(
                                     "" +
                                             new ParameterDaoImpl().
@@ -258,8 +239,7 @@ public class UserMB {
                                             + Cifrado.
                                             getStringMessageDigest(
                                                     loguser.getPassword(),
-                                                    Cifrado.MD5)))
-            {
+                                                    Cifrado.MD5))) {
                 return forgotPassword();
             } else {
                 if (u.getUsertype().equalsIgnoreCase("ADMIN") && u.getActive().equals("A")) {
@@ -298,8 +278,7 @@ public class UserMB {
                         audit.setOperationcrud("I");
                         auditService.insert(audit);
                         if (Days.daysBetween(new DateTime(u.getDatelastpassword().getTime()), new DateTime(d.getTime())).getDays() >
-                                new ParameterDaoImpl().getParameter(2).getNumbervalue() )
-                        {
+                                new ParameterDaoImpl().getParameter(2).getNumbervalue()) {
                             int length = 10;
                             boolean useLetters = true;
                             boolean useNumbers = false;
@@ -646,12 +625,12 @@ public class UserMB {
 
     public String getQRdata() {
         return
-                "Nombre:" + this.user.getFullname()  + "\n" +
-                "Email:" + this.user.getEmailaddress()  + "\n" +
-                "Facultad:" + this.user.getSchool()  + "\n" +
-                "Carrera:" + this.user.getMajor()  + "\n" +
-                "Teléfono:" + this.user.getPhonenumber()  + "\n" +
-                "Cédula:" + this.user.getIdentification();
+                "Nombre:" + this.user.getFullname() + "\n" +
+                        "Email:" + this.user.getEmailaddress() + "\n" +
+                        "Facultad:" + this.user.getSchool() + "\n" +
+                        "Carrera:" + this.user.getMajor() + "\n" +
+                        "Teléfono:" + this.user.getPhonenumber() + "\n" +
+                        "Cédula:" + this.user.getIdentification();
     }
 
 }

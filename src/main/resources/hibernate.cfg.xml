@@ -4,10 +4,10 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-<!--        <property name="connection.url">
-            <![CDATA[jdbc:postgresql://localhost/ctrl-ingreso?user=ueb&password=pwd]]></property>-->
+       <property name="connection.url">
+            <![CDATA[jdbc:postgresql://localhost/ctrl-ingreso?user=ueb&password=pwd]]></property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- Drop and re-create all database on startup -->
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
