@@ -6,10 +6,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-/**
- * Método que envia un correo desde la cuenta
- *
- */
 
 public class Mail {
 
@@ -37,8 +33,6 @@ public class Mail {
 			message.setSubject(subject);
 			message.setText(mess);
 
-			System.out.print(message);
-
 			Transport transport=session.getTransport("smtp");
 			transport.connect(host,out,pass);
 
@@ -49,10 +43,7 @@ public class Mail {
 
 		}catch (Exception e){
 			e.printStackTrace();
-
 		}
 		return send;
-
 	}
-
 }

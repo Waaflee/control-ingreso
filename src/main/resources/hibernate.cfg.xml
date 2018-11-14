@@ -7,11 +7,16 @@
 <!--        <property name="connection.url">
             <![CDATA[jdbc:postgresql://localhost/ctrl-ingreso?user=ueb&password=pwd]]></property>-->
         <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
+
+        <!-- Drop and re-create all database on startup -->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <mapping class="entity.Audit"/>
         <mapping class="entity.Entryoutput"/>
         <mapping class="entity.Parameter"/>
         <mapping class="entity.Qrcode"/>
         <mapping class="entity.User"/>
+
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 

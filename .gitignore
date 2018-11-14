@@ -30,6 +30,11 @@ hs_err_pid*
 .factorypath
 .project
 .settings/
+.vscode/
 
 #Compiled output
 target/
+
+#yml files and custom scripts
+docker-compose.yml
+deploy.sh
