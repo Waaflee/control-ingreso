@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+  ctrl-ingreso:
+    # image: ctrl-ingreso:latest 
+    image: waaflee/ueb-control-ingreso
+    ports: 
+      - 8888:8080
+    command: catalina.sh run
+    depends_on:
+      - db
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://db/ctrl-ingreso?user=ueb&password=pwd
+      - DATABASE_URL=jdbc:postgresql://db:5432/ctrl-ingreso
+      - DB_USER=ueb
+      - DB_PASSWORD=pwd
+      - DB=ctrl-ingreso
+  db:
+    image: postgres:11-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=ueb
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=ctrl-ingreso

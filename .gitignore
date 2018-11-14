@@ -35,5 +35,5 @@ hs_err_pid*
 target/
 
 #yml files and custom scripts
-docker-compose.yml
-deploy.sh
+# docker-compose.yml
+# deploy.sh
