@@ -54,9 +54,3 @@ CREATE TABLE users (
 	userType varchar(12) NOT NULL,
 	failedAttempts int NOT NULL DEFAULT 0
 );
-
--- INSERT INTO users
--- 	(userName, password, fullName, identification, emailAddress, phoneNumber, school, major, semester, dateLastPassword, active, userType, failedAttempts)
--- VALUES
--- 	('admin', '827ccb0eea8a706c4c34a16891f84e7b', 'Administrador Agustin', '', 'admina@admins.co', '', 'Facultad de Ingenieria', 'Ingenieria de Sistemas', '7', NOW(), 'A', 'ADMIN', 0);
-

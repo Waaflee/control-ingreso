@@ -17,6 +17,6 @@
 
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
-        
+
     </session-factory>
 </hibernate-configuration>

@@ -2,7 +2,6 @@ version: "2"
 
 services:
   ctrl-ingreso:
-    # image: ctrl-ingreso:latest 
     image: waaflee/ueb-control-ingreso
     ports: 
       - 8888:8080
@@ -16,10 +15,6 @@ services:
       - DB_PASSWORD=pwd
       - DB=ctrl-ingreso
   db:
-    image: postgres:11-alpine
+    image: waaflee/ueb-control-ingreso-db
     ports:
       - 5432:5432
-    environment:
-      - POSTGRES_USER=ueb
-      - POSTGRES_PASSWORD=pwd
-      - POSTGRES_DB=ctrl-ingreso
