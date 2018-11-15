@@ -62,18 +62,16 @@
                     <h:form>
                         <h:panelGrid columns="2" styleClass="panel">
                             <p:menu style="background-color: rgb(151,199,119)">
-                                <p:menuitem value="Generar código" update="tables">
+                                <p:menuitem value="Generar código" update="@all">
                                     <f:setPropertyActionListener value="/user/QR.xhtml"
                                                                  target="#{userMB.table}"/>
                                 </p:menuitem>
 
-                                <p:menuitem value="Gestión de cuenta" update="tables">
+                                <p:menuitem value="Gestión de cuenta" update="@all">
                                     <f:setPropertyActionListener value="/user/userManagement.xhtml"
                                                                  target="#{userMB.table}"/>
                                 </p:menuitem>
                             </p:menu>
-
-
                         </h:panelGrid>
                     </h:form>
                 </div>

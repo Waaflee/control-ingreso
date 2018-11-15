@@ -8,19 +8,10 @@
     <link rel="stylesheet" href="../styles/sakura.css" type="text/css"/>
     <style type="text/css">
         body {
-            /*	background-color:rgb(197,224,179);*/
             background-color: rgb(230, 242, 222);
         }
 
         .centered {
-            /*position: absolute;
-            height: 340px;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-            width: AUTO;
-            left: 50%;
-            margin-left: -330px;*/
             background-color: rgb(168, 208, 141);
         }
     </style>
@@ -87,6 +78,7 @@
 
                 <h:outputLabel value="Cédula:" style="font-weight:bold"/>
                 <p:inputNumber value="#{userMB.user.identification}" required="true"
+                               disabled="true"
                                requiredMessage="El campo cédula completo es obligatorio"
                                id="dni"
                                decimalPlaces="0"

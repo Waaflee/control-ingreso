@@ -69,6 +69,8 @@ public class UserMB {
             user.setFailedattempts(0);
         }
 
+        this.qr = QRService.encode(user);
+
         userService.update(user);
 
         auditService = new AuditService();
@@ -155,12 +157,11 @@ public class UserMB {
         FacesMessage message = null;
         user = (User) listUsers.getRowData();
         if (user.getActive().equals("I")) {
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Acción imposible", "El usuario ya se encuentra inactivo");
+            addMessage("Acción imposible", "El usuario ya se encuentra inactivo");
         } else {
             user.setActive("I");
             userService.update(user);
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Acción exitosa", "El usuario ha sido desactivado");
-
+            addMessage("Acción exitosa", "El usuario ha sido desactivado");
             java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
             audit.setCreatedate(d);
             audit.setAddressip(getLocalAddress());
@@ -171,13 +172,8 @@ public class UserMB {
             audit.setOperationcrud("U");
             auditService.insert(audit);
         }
-
         boolean show = false;
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
         PrimeFaces.current().ajax().addCallbackParam("show", show);
-
-
         return null;
     }
 
@@ -220,24 +216,20 @@ public class UserMB {
         userService = new UserService();
         User u = userService.getUserByDNI(Integer.parseInt(loguser.getIdentification()));
         boolean wrongPassword = true, wrongUsername = true;
-
-        FacesMessage message = null;
         boolean loggedIn = false;
 
         if (u != null) {
             wrongUsername = false;
 
-            if (
-                    u.getActive().equals("A") &&
-                            u.getPassword().equals(
-                                    "" +
-                                            new ParameterDaoImpl().
-                                                    getParameter(1).
-                                                    getTextvalue()
-                                            + Cifrado.
-                                            getStringMessageDigest(
-                                                    loguser.getPassword(),
-                                                    Cifrado.MD5))) {
+            if (u.getActive().equals("A") &&
+                    u.getPassword().equals(
+                            new ParameterDaoImpl().
+                                    getParameter(1).
+                                    getTextvalue()
+                                    + Cifrado.getStringMessageDigest(
+                                    loguser.getPassword(),
+                                    Cifrado.MD5))) {
+                log.info("First loging, redirecting to new password...");
                 return forgotPassword();
             } else {
                 if (u.getUsertype().equalsIgnoreCase("ADMIN") && u.getActive().equals("A")) {
@@ -278,10 +270,10 @@ public class UserMB {
                         auditService.insert(audit);
                         if (Days.daysBetween(new DateTime(u.getDatelastpassword().getTime()), new DateTime(d.getTime())).getDays() >
                                 new ParameterDaoImpl().getParameter(2).getNumbervalue()) {
-                            int length = 10;
+                            log.info("La clave ha caducado");
                             boolean useLetters = true;
                             boolean useNumbers = false;
-                            String password = RandomStringUtils.random(length, useLetters, useNumbers);
+                            String password = RandomStringUtils.random(10, useLetters, useNumbers);
                             String mail = "Hola! " + user.getFullname()
                                     + "\n Su contraseña ha caducado."
                                     + ",\nSu nueva contraseña en el Sistema de Control de Ingreso de la Universidad El Bosque" + " es: "
@@ -289,16 +281,10 @@ public class UserMB {
                             String subject = "Cambio Contraseña";
 
                             sendMail(user.getEmailaddress(), mail, subject);
-
-//                            java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
                             user.setDatelastpassword(d);
-
-                            user.setPassword("" + new ParameterDaoImpl().getParameter(1).getTextvalue() + Cifrado.getStringMessageDigest(password, Cifrado.MD5));
-
+                            user.setPassword(new ParameterDaoImpl().getParameter(1).getTextvalue() + Cifrado.getStringMessageDigest(password, Cifrado.MD5));
                             userService.update(user);
-
                             auditService = new AuditService();
-
                             audit.setCreatedate(d);
                             audit.setAddressip(getLocalAddress());
                             audit.setId(0);
@@ -324,26 +310,18 @@ public class UserMB {
         }
 
         if (wrongUsername) {
-            addMessage("Error en login","Usuario no encontrado");
-        } else if (wrongPassword) {
-            addMessage("Error en login","Contraseña incorrecta" );
+            addMessage("Error en login", "Usuario no encontrado");
         } else if (u.getActive().equals("I")) {
             addMessage("Error en login", "Usuario Inactivo");
+        } else if (wrongPassword) {
+            addMessage("Error en login", "Contraseña incorrecta");
         }
 
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
         return null;
     }
 
-    public User getloguser() {
-        return loguser;
-    }
-
-    public void setloguser(User loguser) {
-        this.loguser = loguser;
-    }
-
-    public String logout() {
+    public String logout() throws IOException {
         auditService = new AuditService();
         java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
         audit.setCreatedate(d);
@@ -354,51 +332,34 @@ public class UserMB {
         audit.setTableid(loguser.getId());
         audit.setOperationcrud("S");
         auditService.insert(audit);
-
         loguser = new User();
-
         table = "";
-
+        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         return "login.xhtml";
     }
 
 
-    public String[] getSchools() {
-        return schools;
-    }
-
-    public String[] getSemesters() {
-        return semesters;
-    }
-
     public void sendMail(String email, String message, String subject) {
-        Mail mail = new Mail();
-        String out = "Soccardweb@gmail.com";
-        String pass = "SOCCARD2018";
-        mail.sendMail(out, pass, email, message, subject);
+        Mail.sendMail(email, message, subject);
     }
 
     public void generateRandomPassword() {
         user = listUsers.getRowData();
-        int length = 10;
         boolean useLetters = true;
         boolean useNumbers = false;
-        String password = RandomStringUtils.random(length, useLetters, useNumbers);
+        String password = RandomStringUtils.random(10, useLetters, useNumbers);
         String message = "Hola! " + user.getFullname()
                 + ",\nsu nueva contraseña en el Sistema de Control de Ingreso de la Universidad El Bosque" + " es: "
                 + password + "\nDeberá cambiarla al momento de ingresar al sistema";
         String subject = "Cambio Contraseña";
-
         sendMail(user.getEmailaddress(), message, subject);
 
         java.sql.Timestamp d = new java.sql.Timestamp(System.currentTimeMillis());
         user.setDatelastpassword(d);
         user.setPassword(Cifrado.getStringMessageDigest(password, Cifrado.MD5));
-
         userService.update(user);
 
         auditService = new AuditService();
-
         audit.setCreatedate(d);
         audit.setAddressip(getLocalAddress());
         audit.setId(0);
@@ -621,9 +582,24 @@ public class UserMB {
         this.table = table;
     }
 
+    public User getloguser() {
+        return loguser;
+    }
+
+    public void setloguser(User loguser) {
+        this.loguser = loguser;
+    }
 
     private static String getLocalAddress() {
         return Ip.getIp();
+    }
+
+    public String[] getSchools() {
+        return schools;
+    }
+
+    public String[] getSemesters() {
+        return semesters;
     }
 
     private void addMessage(String summary, String detail) {

@@ -9,8 +9,9 @@ import javax.mail.internet.MimeMessage;
 
 public class Mail {
 
-	public boolean sendMail(String out, String pass,String email,String mess,String subject){
-		boolean send = false;
+	public static void sendMail(String email,String mess,String subject){
+		String out = "Soccardweb@gmail.com";
+		String pass = "SOCCARD2018";
 		try{
 
 			String host="smtp.gmail.com";
@@ -38,12 +39,9 @@ public class Mail {
 
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			send=true;
-			System.out.print(send);
 
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return send;
 	}
 }

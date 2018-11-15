@@ -196,15 +196,16 @@
         <p:column style="width:60px">
             <f:facet name="header">
                 <p:outputLabel value="Acción"/>
+                <p:growl id="growl2" sticky="true" showDetail="true" life="3000"/>
             </f:facet>
             <p:commandLink value="Generar Contraseña"
                            actionListener="#{userMB.generateRandomPassword()}"
                            rendered="#{'personal' eq user.usertype}"
-                           update="growl"/>
+                           update="growl2"/>
             <p:commandLink value="Generar Contraseña"
                            actionListener="#{userMB.generateRandomPassword()}"
                            rendered="#{'visitante' eq user.usertype}"
-                           update="growl"/>
+                           update="growl2"/>
         </p:column>
 
     </p:dataTable>
