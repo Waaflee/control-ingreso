@@ -13,9 +13,26 @@
     <br/>
     <p:dataTable id="dTable" var="user" value="#{userMB.listUsers}"
                  border="1" cellspacing="0px" paginator="true" rows="10"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                  rowsPerPageTemplate="5,10,15"
-                 style="font-size:12px">
+                 style="font-size:12px; margin-bottom:20px">
+        <div style="float:right;padding-top: 5px;">
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="dTable" fileName="cars" />
+            </h:commandLink>
+
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="dTable" fileName="cars"/>
+            </h:commandLink>
+
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="dTable" fileName="cars" />
+            </h:commandLink>
+
+        </div>
         <p:column style="width:15px">
             <f:facet name="header">
                 <p:outputLabel value="ID"/>
@@ -209,5 +226,24 @@
         </p:column>
 
     </p:dataTable>
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/excel.png" />
+        <p:dataExporter type="xls" target="dTable" fileName="auditorias"/>
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/pdf.png" />
+        <p:dataExporter type="pdf" target="dTable" fileName="auditorias" />
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/csv.png" />
+        <p:dataExporter type="csv" target="dTable" fileName="auditorias" />
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/xml.png" />
+        <p:dataExporter type="xml" target="dTable" fileName="auditorias" />
+    </h:commandLink>
 </h:form>
 </html>

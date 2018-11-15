@@ -2,6 +2,8 @@ package beans;
 
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,9 +15,9 @@ import javax.faces.model.ListDataModel;
 
 import dao.ParameterDaoImpl;
 import data.UniversityData;
-import entity.Qrcode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import util.Ip;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.DateTime;
@@ -47,6 +49,8 @@ public class UserMB {
     private String[] schools;
     private String[] semesters;
     private String table;
+    private Date date1;
+    private Date date2;
 
     public UserMB() {
         loguser = new User();
@@ -204,11 +208,44 @@ public class UserMB {
     }
 
     public DataModel<Audit> getListAudit() {
+    return this.listAudit;
+    }
+
+    public DataModel<Audit> getListofAudit() {
         auditService = new AuditService();
         List<Audit> list = auditService.getAudits();
         listAudit = new ListDataModel<>(list);
 
         return listAudit;
+    }
+
+    public DataModel<Audit> filterByDate() {
+        auditService = new AuditService();
+        Timestamp t1 = new Timestamp(date1.getTime());
+        Timestamp t2 = new Timestamp(date2.getTime());
+        log.info(t1);
+        log.info(t2);
+        if (t1.before(t2)) {
+            addMessage("Procesando", "Las fechas son sucesivas.");
+            List<Audit> list = auditService.getBetweenDates(t1 , t2);
+
+            for (Audit a: list
+                 ) {
+               if (a.getCreatedate().before(t1) || a.getCreatedate().after(t2)) {
+                   list.remove(a);
+               }
+            }
+            listAudit = new ListDataModel<>(list);
+//            RequestContext context = RequestContext.getCurrentInstance();
+            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("tbl");
+
+//            context.update("tbl");
+            return listAudit;
+        } else  {
+            addMessage("ERROR", "Las fechas deben ser sucesivas.");
+            return getListAudit();
+        }
+
     }
 
 
@@ -419,6 +456,7 @@ public class UserMB {
     }
 
 
+
     public String forgotPassword() {
         userService = new UserService();
         this.user = userService.getUserByDNI(Integer.parseInt(loguser.getIdentification()));
@@ -600,9 +638,24 @@ public class UserMB {
         return semesters;
     }
 
+    public Date getDate1() {
+        return date1;
+    }
+
+    public void setDate1(Date date1) {
+        this.date1 = date1;
+    }
+
+    public Date getDate2() {
+        return date2;
+    }
+
+    public void setDate2(Date date2) {
+        this.date2 = date2;
+    }
+
     private void addMessage(String summary, String detail) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(summary, detail));
     }
-
 }

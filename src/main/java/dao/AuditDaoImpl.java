@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -38,8 +39,9 @@ public class AuditDaoImpl implements AuditDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         @SuppressWarnings("unchecked")
-        List<Audit> list = session.createNativeQuery("from Audit where " + filter).list();
+        List<Audit> list = session.createQuery("from Audit where " + filter).list();
         t.commit();
+        LogManager.getLogger().info(list);
         return list;
     }
 }

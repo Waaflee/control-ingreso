@@ -56,6 +56,8 @@
 </h:head>
 
 <h:body>
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+
     <h:panelGrid columns="4" layout="grid" styleClass="panel">
         <div align="right" class="container">
 
@@ -67,27 +69,8 @@
                     <p:graphicImage value="/img/img1.png"
                                     style="width:50px;height:50px"/>
                     <p:spacer width="50px"/>
-                    <h:form>
-                        <p:growl id="messages" showDetail="false"/>
-                        <h:panelGrid columns="2" styleClass="panel">
-                            <h3>Gestión</h3>
-                            <p:commandButton id="dynaButton" value="Show" type="button" icon="pi pi-home"/>
-                            <p:menu trigger="dynaButton" my="left top" at="left bottom">
-                                <p:submenu label="Usuarios">
-                                    <p:menuitem value="Tabla de usuarios" update="@all" icon="pi pi-save">
-                                        <f:setPropertyActionListener value="/usersTable.xhtml"
-                                                                     target="#{userMB.table}"/>
-                                    </p:menuitem>
-                                </p:submenu>
-                                <p:submenu label="Auditorias">
-                                    <p:menuitem value="Tabla de auditorías" update="@all">
-                                        <f:setPropertyActionListener value="/auditTable.xhtml"
-                                                                     target="#{userMB.table}"/>
-                                    </p:menuitem>
-                                </p:submenu>
-                            </p:menu>
-                        </h:panelGrid>
-                    </h:form>
+                    <p:commandButton value="Gestión" type="button" onclick="PF('dlg1').show();"/>
+
                 </div>
                 <center>
                     <h:outputLabel
@@ -106,5 +89,35 @@
     <p:panel id="tables" style="background-color: rgb(168,208,141);height:auto;width:auto">
         <ui:include src="#{userMB.table}"/>
     </p:panel>
+
+    <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+        <h:form>
+            <p:growl id="messages" showDetail="false"/>
+            <h:panelGrid columns="2" styleClass="panel">
+                <p:menu>
+                    <p:submenu label="Usuarios">
+                        <p:menuitem value="Tabla de usuarios" update="@all" icon="pi pi-save">
+                            <f:setPropertyActionListener value="/usersTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                    </p:submenu>
+                    <p:submenu label="Auditorias">
+                        <p:menuitem value="Tabla de auditorías" update="@all" actionListener="#{userMB.getListofAudit}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                        <p:menuitem value="Tabla de auditorías por fecha" update="@all" actionListener="#{userMB.filterByDate}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                    </p:submenu>
+                </p:menu>
+            </h:panelGrid>
+            <p:outputLabel for="popup1" value="Inicio:" />
+            <p:calendar id="popup1" value="#{userMB.date1}" required="true"/>
+            <p:outputLabel for="popup2" value="Fin:" />
+            <p:calendar id="popup2" value="#{userMB.date2}"  required="true"/>
+        </h:form>
+    </p:dialog>
 </h:body>
 </html>

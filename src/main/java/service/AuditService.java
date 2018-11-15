@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.AuditDaoImpl;
 import entity.Audit;
+import org.apache.logging.log4j.LogManager;
 
 public class AuditService{
 
@@ -28,7 +29,8 @@ public class AuditService{
 	}
 
 	public List<Audit> getBetweenDates(Timestamp inicio, Timestamp fin) {
-		String filter = String.format("createdate >= %s AND createdate < %s", inicio, fin);
+		String filter = String.format("createdate BETWEEN '%s' AND '%s'", inicio.toString(), fin.toString());
+        LogManager.getLogger().info(filter);
 		return getAuditsFiltered(filter);
 	}
 	
