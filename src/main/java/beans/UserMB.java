@@ -221,6 +221,10 @@ public class UserMB {
 
     public DataModel<Audit> filterByDate() {
         auditService = new AuditService();
+        if (date1 == null || date2 == null) {
+            addMessage("ERROR", "Las fechas deben ser sucesivas.");
+            return getListAudit();
+        }
         Timestamp t1 = new Timestamp(date1.getTime());
         Timestamp t2 = new Timestamp(date2.getTime());
         log.info(t1);
@@ -246,6 +250,35 @@ public class UserMB {
             return getListAudit();
         }
 
+    }
+
+    public DataModel<Audit> getOperationC() {
+        auditService = new AuditService();
+        List<Audit> list = auditService.getByOperation("C");
+        listAudit = new ListDataModel<>(list);
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("tbl");
+        return listAudit;
+    }
+    public DataModel<Audit> getOperationU() {
+        auditService = new AuditService();
+        List<Audit> list = auditService.getByOperation("U");
+        listAudit = new ListDataModel<>(list);
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("tbl");
+        return listAudit;
+    }
+    public DataModel<Audit> getOperationI() {
+        auditService = new AuditService();
+        List<Audit> list = auditService.getByOperation("I");
+        listAudit = new ListDataModel<>(list);
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("tbl");
+        return listAudit;
+    }
+    public DataModel<Audit> getOperationS() {
+        auditService = new AuditService();
+        List<Audit> list = auditService.getByOperation("S");
+        listAudit = new ListDataModel<>(list);
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("tbl");
+        return listAudit;
     }
 
 

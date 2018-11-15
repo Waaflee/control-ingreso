@@ -8,31 +8,27 @@
     <link rel="stylesheet" href="./styles/sakura.css" type="text/css"/>
 </h:head>
 <h:form>
- <p:commandButton update="@all" value="Actualizar"/>
+    <h:commandButton value="Excel">
+        <!--<p:graphicImage name="/demo/images/excel.png" />-->
+        <p:dataExporter type="xls" target="tbl" fileName="auditorias"/>
+    </h:commandButton>
+
+    <h:commandButton value="PDF">
+        <!--<p:graphicImage name="/demo/images/pdf.png" />-->
+        <p:dataExporter type="pdf" target="tbl" fileName="auditorias" />
+    </h:commandButton>
+
+    <h:commandButton value="CSV">
+        <!--<p:graphicImage name="/demo/images/csv.png" />-->
+        <p:dataExporter type="csv" target="tbl" fileName="auditorias" />
+    </h:commandButton>
+
 <p:dataTable id="tbl" var="audit" value="#{userMB.listAudit}" border="1"
              rows="10"
-             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
              rowsPerPageTemplate="5,10,15"
              cellspacing="0px" paginator="true" styleClass="table" style="font-size:12px; margin-bottom:20px">
-    <f:facet name="{Exporters}">
-        <div style="float:right;padding-top: 5px;">
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/excel.png" width="24"/>
-                <p:dataExporter type="xls" target="tbl" fileName="cars" />
-            </h:commandLink>
 
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
-                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
-            </h:commandLink>
-
-            <h:commandLink>
-                <p:graphicImage name="/demo/images/csv.png" width="24"/>
-                <p:dataExporter type="csv" target="tbl" fileName="cars" />
-            </h:commandLink>
-
-        </div>
-    </f:facet>
     <p:column style="width:15px">
         <f:facet name="header">
             <p:outputLabel value="ID"/>
@@ -85,24 +81,5 @@
         <h:outputText value="#{audit.addressip}"/>
     </p:column>
 </p:dataTable>
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/excel.png" />
-        <p:dataExporter type="xls" target="tbl" fileName="auditorias"/>
-    </h:commandLink>
-
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/pdf.png" />
-        <p:dataExporter type="pdf" target="tbl" fileName="auditorias" />
-    </h:commandLink>
-
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/csv.png" />
-        <p:dataExporter type="csv" target="tbl" fileName="auditorias" />
-    </h:commandLink>
-
-    <h:commandLink>
-        <p:graphicImage name="/demo/images/xml.png" />
-        <p:dataExporter type="xml" target="tbl" fileName="auditorias" />
-    </h:commandLink>
 </h:form>
 </html>

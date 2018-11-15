@@ -110,13 +110,36 @@
                             <f:setPropertyActionListener value="/auditTable.xhtml"
                                                          target="#{userMB.table}"/>
                         </p:menuitem>
+                        <p:menuitem value="Creaciones" update="@all" actionListener="#{userMB.filterByDate}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                    </p:submenu>
+                    <p:submenu label="Reportes">
+                        <p:menuitem value="Crear" update="@all" actionListener="#{userMB.getOperationC}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                        <p:menuitem value="Actualizar" update="@all" actionListener="#{userMB.getOperationU}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                        <p:menuitem value="Ingreso al Sistema" update="@all" actionListener="#{userMB.getOperationI}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+                        <p:menuitem value="Salió del Sistema" update="@all" actionListener="#{userMB.getOperationS}">
+                            <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                         target="#{userMB.table}"/>
+                        </p:menuitem>
+
                     </p:submenu>
                 </p:menu>
             </h:panelGrid>
             <p:outputLabel for="popup1" value="Inicio:" />
-            <p:calendar id="popup1" value="#{userMB.date1}" required="true"/>
+            <p:calendar id="popup1" value="#{userMB.date1}"/>
             <p:outputLabel for="popup2" value="Fin:" />
-            <p:calendar id="popup2" value="#{userMB.date2}"  required="true"/>
+            <p:calendar id="popup2" value="#{userMB.date2}"/>
         </h:form>
     </p:dialog>
 </h:body>

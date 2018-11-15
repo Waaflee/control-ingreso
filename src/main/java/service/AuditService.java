@@ -33,6 +33,11 @@ public class AuditService{
         LogManager.getLogger().info(filter);
 		return getAuditsFiltered(filter);
 	}
+    public List<Audit> getByOperation(String operation) {
+        String filter = String.format("operationcrud = '%s'", operation);
+        LogManager.getLogger().info(filter);
+        return getAuditsFiltered(filter);
+    }
 	
 	
 }
