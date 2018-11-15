@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import dao.AuditDaoImpl;
@@ -24,6 +25,11 @@ public class AuditService{
 
 	public List<Audit> getAuditsFiltered(String filter) {
 		return auditDao.getAuditsFiltered(filter);
+	}
+
+	public List<Audit> getBetweenDates(Timestamp inicio, Timestamp fin) {
+		String filter = String.format("createdate >= %s AND createdate < %s", inicio, fin);
+		return getAuditsFiltered(filter);
 	}
 	
 	

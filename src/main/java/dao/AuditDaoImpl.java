@@ -29,9 +29,8 @@ public class AuditDaoImpl implements AuditDAO {
     }
 
     public Audit getAudit(int id) {
-
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return (Audit) session.load(Audit.class, id);
+        return session.load(Audit.class, id);
     }
 
     public List<Audit> getAuditsFiltered(String filter) {
@@ -39,7 +38,7 @@ public class AuditDaoImpl implements AuditDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         @SuppressWarnings("unchecked")
-        List<Audit> list = session.createQuery("from Audit where " + filter).list();
+        List<Audit> list = session.createNativeQuery("from Audit where " + filter).list();
         t.commit();
         return list;
     }

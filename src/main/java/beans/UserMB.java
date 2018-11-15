@@ -308,7 +308,6 @@ public class UserMB {
                 }
             }
         }
-
         if (wrongUsername) {
             addMessage("Error en login", "Usuario no encontrado");
         } else if (u.getActive().equals("I")) {
@@ -316,7 +315,6 @@ public class UserMB {
         } else if (wrongPassword) {
             addMessage("Error en login", "Contraseña incorrecta");
         }
-
         PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
         return null;
     }
