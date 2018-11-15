@@ -10,8 +10,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
 import dao.ParameterDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import util.Ip;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.DateTime;
@@ -29,7 +30,7 @@ import util.Mail;
 @ManagedBean
 @SessionScoped
 public class UserMB {
-    public String QRdata = "";
+    private Logger log = LogManager.getLogger();
     private User user;
     public User tempUser;
     private Audit audit = new Audit();
@@ -62,7 +63,9 @@ public class UserMB {
             user.setDatelastpassword(d);
             user.setPassword(Cifrado.getStringMessageDigest(user.getPassword(), Cifrado.MD5));
         }
-        this.QRdata = QRService.refresh(u);
+        if (user.getActive().equals("A")) {
+            user.setFailedattempts(0);
+        }
 
         userService.update(user);
 
@@ -309,7 +312,6 @@ public class UserMB {
                             audit.setOperationcrud("U");
                             auditService.insert(audit);
                         }
-                        this.QRdata = QRService.refresh(u);
                         wrongPassword = false;
                         loggedIn = true;
                         this.setTable("/user/QR.xhtml");
@@ -526,6 +528,16 @@ public class UserMB {
         audit.setTableid(user.getId());
         audit.setOperationcrud("U");
         auditService.insert(audit);
+        log.info("Nueva contraseña generada exitosamente");
+        addMessage("Nueva Contraseña Generada", "data update");
+
+    }
+    public void addMessage(String summary, String detail) {
+/*        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);*/
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful",  "Nueva Contraseña Generada"));
     }
 
     public String prepareForgotPassword() {
@@ -622,15 +634,4 @@ public class UserMB {
 //        return "login.xhtml";
 
     }
-
-    public String getQRdata() {
-        return
-                "Nombre:" + this.user.getFullname() + "\n" +
-                        "Email:" + this.user.getEmailaddress() + "\n" +
-                        "Facultad:" + this.user.getSchool() + "\n" +
-                        "Carrera:" + this.user.getMajor() + "\n" +
-                        "Teléfono:" + this.user.getPhonenumber() + "\n" +
-                        "Cédula:" + this.user.getIdentification();
-    }
-
 }

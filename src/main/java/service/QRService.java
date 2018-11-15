@@ -14,18 +14,23 @@ public class QRService {
         qrcode.setDatestart(new Timestamp(System.currentTimeMillis()));
         // dias de vigencia parametrizados convertidos a milisegundos.
         qrcode.setDateend(new Timestamp(System.currentTimeMillis() + ((long) 86400000 * (long) new ParameterDaoImpl().getParameter(2).getNumbervalue())));
-        qrcode.setQrcode("Nombre:" + u.getFullname() + "\n" +
+        qrcode.setQrcode(
+                "Nombre:" + u.getFullname() + "\n" +
                 "Email:" + u.getEmailaddress() + "\n" +
                 "Facultad:" + u.getSchool() + "\n" +
                 "Carrera:" + u.getMajor() + "\n" +
                 "Phone:" + u.getPhonenumber() + "\n" +
-                "Identification:" + u.getIdentification());
+                "Identification:" + u.getIdentification() + "\n" +
+                "UUID: " + System.currentTimeMillis()
+        );
         qrcode.setId(u.getId());
-        QRDaoImpl.put(qrcode);
+//        QRDaoImpl.put(qrcode);
     }
 
     private static Qrcode retrieve(User u) {
-        return QRDaoImpl.getQrcode(u.getId());
+
+//        return QRDaoImpl.getQrcode(u.getId());
+        return new Qrcode();
     }
 
     public static String refresh(User u) {

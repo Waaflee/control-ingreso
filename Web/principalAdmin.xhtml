@@ -19,15 +19,10 @@
         .table td, .table tr {
             background-color: rgb(222, 237, 211);
             font-size: 12px;
-            /*	background-color: rgb(168,208,141)*/
-            /* background-color: rgb(151,199,119) */
         }
 
         body {
-            /*	background-color:rgb(197,224,179);*/
             background-color: rgb(230, 242, 222);
-            /*height: 100%;
-            width: 100%;*/
             width: 100%;
             height: 100%;
             display: flex;
@@ -46,16 +41,9 @@
 
         .table td, .table tr {
             background-color: rgb(222, 237, 211);
-            /*	background-color: rgb(168,208,141)*/
-            /* background-color: rgb(151,199,119) */
         }
 
         .container {
-            /*            width: 100%;
-                        height: 100%;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;*/
         }
 
         .superior-group {
@@ -71,7 +59,6 @@
     <h:panelGrid columns="4" layout="grid" styleClass="panel">
         <div align="right" class="container">
 
-
             <p:panel style="width:auto;background-color: rgb(168,208,141)">
                 <div class="superior-group">
                     <p:graphicImage value="/img/UEBlogo.png"
@@ -81,20 +68,24 @@
                                     style="width:50px;height:50px"/>
                     <p:spacer width="50px"/>
                     <h:form>
+                        <p:growl id="messages" showDetail="false"/>
                         <h:panelGrid columns="2" styleClass="panel">
-                            <p:menu style="height:auto;background-color: rgb(151,199,119);width:180px">
-                                <p:menuitem value="Tabla de usuarios" update="tables">
-                                    <f:setPropertyActionListener value="/usersTable.xhtml"
-                                                                 target="#{userMB.table}"/>
-                                </p:menuitem>
-
-                                <p:menuitem value="Tabla de auditorías" update="tables">
-                                    <f:setPropertyActionListener value="/auditTable.xhtml"
-                                                                 target="#{userMB.table}"/>
-                                </p:menuitem>
+                            <h3>Gestión</h3>
+                            <p:commandButton id="dynaButton" value="Show" type="button" icon="pi pi-home"/>
+                            <p:menu trigger="dynaButton" my="left top" at="left bottom">
+                                <p:submenu label="Usuarios">
+                                    <p:menuitem value="Tabla de usuarios" update="@all" icon="pi pi-save">
+                                        <f:setPropertyActionListener value="/usersTable.xhtml"
+                                                                     target="#{userMB.table}"/>
+                                    </p:menuitem>
+                                </p:submenu>
+                                <p:submenu label="Auditorias">
+                                    <p:menuitem value="Tabla de auditorías" update="@all">
+                                        <f:setPropertyActionListener value="/auditTable.xhtml"
+                                                                     target="#{userMB.table}"/>
+                                    </p:menuitem>
+                                </p:submenu>
                             </p:menu>
-
-
                         </h:panelGrid>
                     </h:form>
                 </div>

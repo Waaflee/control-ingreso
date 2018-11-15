@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./styles/sakura.css" type="text/css"/>
 </h:head>
 <h:form>
-
     <p:button value="Nuevo" href="#{userMB.prepareAddUser()}"
               style="background-color: rgb(151,199,119)"/>
     <br/>
@@ -200,10 +199,12 @@
             </f:facet>
             <p:commandLink value="Generar Contraseña"
                            actionListener="#{userMB.generateRandomPassword()}"
-                           rendered="#{'personal' eq user.usertype}"/>
+                           rendered="#{'personal' eq user.usertype}"
+                           update="growl"/>
             <p:commandLink value="Generar Contraseña"
                            actionListener="#{userMB.generateRandomPassword()}"
-                           rendered="#{'visitante' eq user.usertype}"/>
+                           rendered="#{'visitante' eq user.usertype}"
+                           update="growl"/>
         </p:column>
 
     </p:dataTable>
