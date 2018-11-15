@@ -37,6 +37,16 @@ public class QRService {
         generate(u);
         return retrieve(u).getQrcode();
     }
+
+    public static String encode(User u) {
+        return  "Nombre:" + u.getFullname() + "\n" +
+                "Email:" + u.getEmailaddress() + "\n" +
+                "Facultad:" + u.getSchool() + "\n" +
+                "Carrera:" + u.getMajor() + "\n" +
+                "Phone:" + u.getPhonenumber() + "\n" +
+                "Identification:" + u.getIdentification() + "\n" +
+                "UUID: " + System.currentTimeMillis();
+    }
 	
 	
 }
