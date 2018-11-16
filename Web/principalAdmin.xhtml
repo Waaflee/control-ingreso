@@ -110,10 +110,6 @@
                             <f:setPropertyActionListener value="/auditTable.xhtml"
                                                          target="#{userMB.table}"/>
                         </p:menuitem>
-                        <p:menuitem value="Creaciones" update="@all" actionListener="#{userMB.filterByDate}">
-                            <f:setPropertyActionListener value="/auditTable.xhtml"
-                                                         target="#{userMB.table}"/>
-                        </p:menuitem>
                     </p:submenu>
                     <p:submenu label="Reportes">
                         <p:menuitem value="Crear" update="@all" actionListener="#{userMB.getOperationC}">
